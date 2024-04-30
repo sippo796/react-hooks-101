@@ -25,8 +25,8 @@
 
 export type State = {
   id: number,
-  title: string,
-  body: string,
+  title?: string,
+  body?: string,
 }
 
 export type Action = {
@@ -44,6 +44,9 @@ const events = (state:State[], action:Action) => {
         return [...state, {id, ...event}]
       }
     case 'DELETE_EVENT':
+      {
+        return state.filter(event => event.id !== action.payload.id)
+      }
     case 'DELETE_ALL_EVENTS':
       return []
     default:
