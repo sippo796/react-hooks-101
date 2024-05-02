@@ -3,12 +3,15 @@ import { Action, State } from "../reducers"
 
 const Event = ({dispatch, event}: {dispatch: React.Dispatch<Action>, event: State}) => {
   const handleClickDeleteButton = () => {
-    dispatch({
-      type: 'DELETE_EVENT',
-      payload: {
-        id: event.id,
-      },
-    })
+    const result = window.confirm(`イベント(id=${event.id})を本当に削除しても良いですか？`)
+    if(result) {
+      dispatch({
+        type: 'DELETE_EVENT',
+        payload: {
+          id: event.id,
+        },
+      })
+    }
   }
   
   return (
