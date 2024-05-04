@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { State } from "../reducers"
+import { State } from "../reducers/events"
 import { DELETE_EVENT } from "../actions"
 import AppContext from "../contexts/AppContext"
 

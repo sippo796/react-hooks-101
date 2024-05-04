@@ -1,8 +1,8 @@
 import { Dispatch, createContext } from "react";
-import { Action, State } from "../reducers";
+import { Action, State } from "../reducers/events";
 
 export type AppState = {
-  state: State[];
+  state: State[] | undefined;
   dispatch: Dispatch<Action>;
 }
 
