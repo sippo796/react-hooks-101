@@ -5,11 +5,13 @@ import { Action, State } from './events'
 
 const operationLogs = (state:State[] | undefined, action:Action):State[] => {
 
+  console.log(action.actionType)
   switch(action.actionType){
     case ActionTypes.ADD_OPERATION_LOG:
       {
         const newState:State = {
-          ...action,
+          body: action.state.body,
+          title: action.state.title,
           id:action.state.id,
           description: action.state.description,
           operatedAt: action.state.operatedAt
@@ -23,7 +25,7 @@ const operationLogs = (state:State[] | undefined, action:Action):State[] => {
     case ActionTypes.DELETE_ALL_OPERATION_LOGS:
       return [];
     default:
-      return [];
+      return state ? state : [];
   }
 }
 

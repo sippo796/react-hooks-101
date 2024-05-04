@@ -10,17 +10,37 @@ const EventForm = () => {
 
   const addEvent = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    
+
+    let id = 0
+    if(state){
+      if(state.length === 0){
+        id = 1
+      }
+      else{
+        id = state[state.length - 1].id + 1
+      }
+    }
+    else{
+      id = 1
+    }
     if(dispatch){
       dispatch({
         actionType: ActionTypes.CREATE_EVENT,
         state: {
-          id: state ? state.length === 0 ? 1 : state[state.length - 1].id + 1 : 1,
+          id,
           body,
           description: `イベント(id=${state ? state.length === 0 ? 1 : state[state.length - 1].id + 1 : 1})を作成しました`,
           operatedAt: new Date().toLocaleString(),
           title,
         },
+      })
+      dispatch({
+        actionType: ActionTypes.ADD_OPERATION_LOG,
+        state: {
+          id,
+          description: 'イベントを作成しました。',
+          operatedAt: new Date().toLocaleString()
+        }
       })
       setTitle('')
       setBody('')
@@ -37,6 +57,14 @@ const EventForm = () => {
           id: -1,
           description: '全てのイベントを削除しました',
           operatedAt: new Date().toLocaleString(),
+        }
+      })
+      dispatch({
+        actionType: ActionTypes.ADD_OPERATION_LOG,
+        state:{
+          id : -1,
+          description: '全てのイベントを削除しました。',
+          operatedAt: new Date().toLocaleString()
         }
       })
     }

@@ -39,18 +39,18 @@ export type Action = {
 }
 
 const events = (state:State[] | undefined, action: Action):State[] => {
-  console.log({state, action})
   switch(action.actionType) {
     case ActionTypes.CREATE_EVENT:
       {
         const newState:State = {
-          ...action,
+          body: action.state.body,
+          title: action.state.title,
           id:action.state.id,
           description: action.state.description,
           operatedAt: action.state.operatedAt
         }
         if(state){
-          return [newState, ...state] 
+          return [...state, newState] 
         }else{
           return [newState]
         }
@@ -67,7 +67,7 @@ const events = (state:State[] | undefined, action: Action):State[] => {
     case ActionTypes.DELETE_ALL_EVENTS:
       return []
     default:
-      return []
+      return state? state : []
   }
 
 }
