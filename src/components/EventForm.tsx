@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Action, State } from '../reducers'
+import { CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions';
 
 
 type Props = {
@@ -16,7 +17,7 @@ const EventForm = ({state, dispatch}:Props) => {
     
     if(dispatch){
       dispatch({
-        type: 'CREATE_EVENT',
+        type: CREATE_EVENT,
         payload: {
           id:0,
           title,
@@ -33,7 +34,7 @@ const EventForm = ({state, dispatch}:Props) => {
     const result = window.confirm('全てのイベントを本当に削除しても良いですか？')
     if(result){
       dispatch({
-        type: 'DELETE_ALL_EVENTS',
+        type: DELETE_ALL_EVENTS,
         payload: {
           id: 0,
         }
