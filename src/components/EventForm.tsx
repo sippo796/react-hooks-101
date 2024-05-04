@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions';
+import { ActionTypes } from '../actions';
 import AppContext from '../contexts/AppContext';
 
 const EventForm = () => {
@@ -13,16 +13,18 @@ const EventForm = () => {
     
     if(dispatch){
       dispatch({
-        type: CREATE_EVENT,
-        payload: {
-          id:0,
-          title,
+        actionType: ActionTypes.CREATE_EVENT,
+        state: {
+          id: state ? state.length === 0 ? 1 : state[state.length - 1].id + 1 : 1,
           body,
+          description: `イベント(id=${state ? state.length === 0 ? 1 : state[state.length - 1].id + 1 : 1})を作成しました`,
+          operatedAt: new Date().toLocaleString(),
+          title,
         },
       })
+      setTitle('')
+      setBody('')
     }
-    setTitle('')
-    setBody('')
   }
 
   const deleteAllEvents = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,9 +32,11 @@ const EventForm = () => {
     const result = window.confirm('全てのイベントを本当に削除しても良いですか？')
     if(result){
       dispatch({
-        type: DELETE_ALL_EVENTS,
-        payload: {
-          id: 0,
+        actionType: ActionTypes.DELETE_ALL_EVENTS,
+        state: {
+          id: -1,
+          description: '全てのイベントを削除しました',
+          operatedAt: new Date().toLocaleString(),
         }
       })
     }

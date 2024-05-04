@@ -1,14 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import eventReducerfunc, {State} from '../reducers/events'
+import eventFunc from '../reducers/events'
 import { useReducer } from 'react'
 import EventForm from './EventForm'
 import Events from './Events'
 import AppContext from '../contexts/AppContext'
 
 const App = () => {
-  const initialState : State[] = []
-    
-  const [state, dispatch] = useReducer(eventReducerfunc, initialState)
+   
+  const [state, dispatch] = useReducer(eventFunc, [])
 
   return (
     <AppContext.Provider value={{state, dispatch}}>

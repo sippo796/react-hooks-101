@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { State } from "../reducers/events"
-import { DELETE_EVENT } from "../actions"
+import { ActionTypes } from "../actions"
 import AppContext from "../contexts/AppContext"
 
 type Props = {
@@ -13,8 +13,8 @@ const Event = ({state} : Props) => {
     const result = window.confirm(`イベント(id=${state.id})を本当に削除しても良いですか？`)
     if(result) {
       dispatch({
-        type: DELETE_EVENT,
-        payload: {
+        actionType: ActionTypes.DELETE_EVENT,
+        state: {
           id: state.id,
         },
       })

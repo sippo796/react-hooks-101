@@ -23,41 +23,51 @@
 //   {id: 4, title: '2020年東京オリンピックのお知らせ', body: '2020年東京オリンピックを開催します！つきましては、、、'},
 // ]
 
-import { CREATE_EVENT, DELETE_ALL_EVENTS, DELETE_EVENT } from "../actions"
+import { ActionTypes } from "../actions"
 
 export type State = {
   id: number,
   title?: string,
   body?: string,
+  description?: string,
+  operatedAt?: string,
 }
 
 export type Action = {
-  type: string,
-  payload: State
+  actionType: string,
+  state: State,
 }
 
-const events = (state:State[] | undefined, action:Action) => {
-  switch(action.type) {
-    case CREATE_EVENT:
+const events = (state:State[] | undefined, action: Action):State[] => {
+  console.log({state, action})
+  switch(action.actionType) {
+    case ActionTypes.CREATE_EVENT:
       {
-        const event = { title: action.payload.title, body: action.payload.body }
+        const newState:State = {
+          ...action,
+          id:action.state.id,
+          description: action.state.description,
+          operatedAt: action.state.operatedAt
+        }
         if(state){
-          const length = state.length
-          const id = length === 0 ? 1 : state[length - 1].id + 1
-          return [...state, {id, ...event}]
+          return [newState, ...state] 
+        }else{
+          return [newState]
+        }
+      }
+    case ActionTypes.DELETE_EVENT:
+      {
+        if(state){
+          return state.filter(event => event.id !== action.state?.id)
         }
         else{
-          return [{id: 1, ...event}]
+          return []
         }
       }
-    case DELETE_EVENT:
-      {
-        return state?.filter(event => event.id !== action.payload.id)
-      }
-    case DELETE_ALL_EVENTS:
+    case ActionTypes.DELETE_ALL_EVENTS:
       return []
     default:
-      return state
+      return []
   }
 
 }
