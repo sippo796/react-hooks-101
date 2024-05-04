@@ -1,5 +1,10 @@
-import { createContext } from "react";
+import { Dispatch, createContext } from "react";
+import { Action, State } from "../reducers";
 
-const AppContext = createContext("");
+export type AppState = {
+  state: State[];
+  dispatch: Dispatch<Action>;
+}
 
+const AppContext = createContext<AppState>({ state: [], dispatch: () => {} });
 export default AppContext;

@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import { Action, State } from '../reducers'
+import React, { useContext, useState } from 'react';
 import { CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions';
+import AppContext from '../contexts/AppContext';
 
-
-type Props = {
-  state: State[],
-  dispatch: React.Dispatch<Action>,
-}
-const EventForm = ({state, dispatch}:Props) => {
+const EventForm = () => {
+  const {state, dispatch} = useContext(AppContext)
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const unCreatable = title === '' || body === ''
